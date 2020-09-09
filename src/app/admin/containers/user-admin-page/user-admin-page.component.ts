@@ -18,7 +18,7 @@ export class UserAdminPageComponent implements OnInit {
   addingUser: boolean;
 
   constructor(public userAdminService: UserAdminService) {
-    userAdminService.addMockData();
+    // userAdminService.addMockData();
   }
 
   ngOnInit(): void {

@@ -11,58 +11,58 @@ import {
 })
 export class UserAdminService {
 
-  private permissions: Permission[];
-  private userGroups: UserGroup[];
-  private users: User[];
+  private permissions: {
+    [id: string]: Permission
+  };
+  private userGroups: {
+    [id: string]: UserGroup
+  };
+  private users: {
+    [id: string]: User
+  };
   private configOptions: { [key: string]: ConfigOption[] };
 
   constructor() {
-    this.permissions = [];
-    this.userGroups = [];
-    this.users = [];
+    this.permissions = {};
+    this.userGroups = {};
+    this.users = {};
     this.generateConfigOptions();
   }
 
-  public addPermission(permission: Permission) {
-    this.permissions.push(permission);
+  public upsertPermission(permission: Permission) {
+    this.permissions[permission.id] = {
+      ...this.permissions[permission.id],
+      ...permission
+    };
     this.generateConfigOptions();
   }
 
-  public addUserGroup(userGroup: UserGroup) {
-    this.userGroups.push(userGroup);
+  public upsertUserGroup(userGroup: UserGroup) {
+    this.userGroups[userGroup.id] = {
+      ...this.userGroups[userGroup.id],
+      ...userGroup
+    };
     this.generateConfigOptions();
   }
 
-  public addUser(user: User) {
-    this.users.push(user);
-    this.generateConfigOptions();
-  }
-
-  public updatePermission(permission: Permission) {
-    this.permissions = this.permissions.map(permissionItem => permissionItem.id === permission.id ? permission : permissionItem);
-    this.generateConfigOptions();
-  }
-
-  public updateUserGroup(userGroup: UserGroup) {
-    this.userGroups = this.userGroups.map(userGroupItem => userGroupItem.id === userGroup.id ? userGroup : userGroupItem);
-    this.generateConfigOptions();
-  }
-
-  public updateUser(user: User) {
-    this.users = this.users.map(userItem => userItem.id === user.id ? user : userItem);
+  public upsertUser(user: User) {
+    this.users[user.id] = {
+      ...this.users[user.id],
+      ...user
+    };
     this.generateConfigOptions();
   }
 
   public getPermissions(): Permission[] {
-    return this.permissions;
+    return Object.keys(this.permissions).map(key => this.permissions[key]);
   }
 
   public getUserGroups(): UserGroup[] {
-    return this.userGroups;
+    return Object.keys(this.userGroups).map(key => this.userGroups[key]);
   }
 
   public getUsers(): User[] {
-    return this.users;
+    return Object.keys(this.users).map(key => this.users[key]);
   }
 
   public getOptions(type: 'permission' | 'userGroup' | 'user'): ConfigOption[] {
@@ -70,64 +70,66 @@ export class UserAdminService {
   }
 
   public getUserPermissions(userId: string): Permission[] {
-    const user: User = this.users.find(value => value.id === userId);
+    const user: User = this.users[userId];
     if (user) {
-      const userGroups: UserGroup[] = this.userGroups.filter(group => (user.userGroups || []).includes(group.id));
+      const userGroups: UserGroup[] = (user.userGroups || []).map(groupId => this.userGroups[groupId]);
       let permissionIds: string[] = [...(user.permissions || []), ...userGroups.reduce((acc, crt) => [
         ...acc,
         ...crt.permissions,
       ], [])];
       permissionIds = Array.from(new Set(permissionIds));
-      return this.permissions.filter(permission => permissionIds.includes(permission.id));
+      return permissionIds.map(id => this.permissions[id]);
     }
     return null;
   }
 
   public addMockData() {
-    this.permissions = [
-      {
+    this.permissions = {
+      p1: {
         id: 'p1',
         name: 'Permission 1'
       },
-      {
+      p2: {
         id: 'p2',
         name: 'Permission 2'
       }
-    ];
-    this.userGroups = [
-      {
+    };
+    this.userGroups = {
+      g1: {
         id: 'g1',
         name: 'Group 1',
         permissions: ['p1']
       },
-    ];
-    this.users = [
-      {
-        id: 'g1',
-        name: 'Group 1',
+    };
+    this.users = {
+      u1: {
+        id: 'u1',
+        name: 'User 1',
         permissions: ['p2'],
         userGroups: ['g1']
       },
-    ];
+    };
   }
 
   private generateConfigOptions() {
+    const permissions: Permission[] = this.getPermissions();
+    const userGroups: Permission[] = this.getUserGroups();
     this.configOptions = {
       permission: [],
       userGroup: [
         {
           id: 'permissions',
-          options: this.permissions
+          options: permissions
         }
       ],
       user: [
         {
           id: 'userGroups',
-          options: this.userGroups
+          options: userGroups
         },
         {
           id: 'permissions',
-          options: this.permissions
+          options: permissions
         }
       ],
     };

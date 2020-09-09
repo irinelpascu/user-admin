@@ -6,13 +6,13 @@
     <ef-list-item *ngFor="let permission of userAdminService.getPermissions()"
       [model]="permission"
       [configs]="userAdminService.getOptions('permission')"
-      (update)="userAdminService.updatePermission($event)">
+      (update)="userAdminService.upsertPermission($event)">
     </ef-list-item>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="addingPermission = true">New Permission</button>
     <ef-new-item *ngIf="addingPermission"
-      (create)="userAdminService.addPermission($event)"
+      (create)="userAdminService.upsertPermission($event)"
       (dismiss)="addingPermission = false">
     </ef-new-item>
   </mat-card-actions>
@@ -25,13 +25,13 @@
     <ef-list-item *ngFor="let userGroup of userAdminService.getUserGroups()"
       [model]="userGroup"
       [configs]="userAdminService.getOptions('userGroup')"
-      (update)="userAdminService.updateUserGroup($event)">
+      (update)="userAdminService.upsertUserGroup($event)">
     </ef-list-item>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="addingUserGroup = true">New User Group</button>
     <ef-new-item *ngIf="addingUserGroup"
-      (create)="userAdminService.addUserGroup($event)"
+      (create)="userAdminService.upsertUserGroup($event)"
       (dismiss)="addingUserGroup = false">
     </ef-new-item>
   </mat-card-actions>
@@ -45,13 +45,13 @@
       [model]="user"
       [permissions]="userAdminService.getUserPermissions(user.id)"
       [configs]="userAdminService.getOptions('user')"
-      (update)="userAdminService.updateUser($event)">
+      (update)="userAdminService.upsertUser($event)">
     </ef-list-item>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="addingUser = true">New User</button>
     <ef-new-item *ngIf="addingUser"
-      (create)="userAdminService.addUser($event)"
+      (create)="userAdminService.upsertUser($event)"
       (dismiss)="addingUser = false">
     </ef-new-item>
   </mat-card-actions>

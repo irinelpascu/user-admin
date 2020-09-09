@@ -1,0 +1,18 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSave()">
+  <mat-form-field>
+    <mat-label>ID</mat-label>
+    <input matInput formControlName="id" placeholder="An ID string">
+    <mat-error *ngIf="formGroup.get('id').hasError('required')">
+      ID is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" placeholder="A name">
+    <mat-error *ngIf="formGroup.get('name').hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Create</button>
+  <a (click)="dismiss.emit()">Cancel</a>
+</form>

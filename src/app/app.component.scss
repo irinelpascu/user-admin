@@ -1,0 +1,18 @@
+:host {
+  mat-toolbar {
+    .user {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      cursor: pointer;
+
+      .account {
+        margin-right: 4px;
+      }
+
+      .arrow {
+        margin-left: 4;
+      }
+    }
+  }
+}

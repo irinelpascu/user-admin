@@ -1,0 +1,23 @@
+:host {
+  display: block;
+
+  mat-card {
+
+    form {
+      display: flex;
+
+      mat-form-field {
+        margin-left: 8px;
+
+        &:first-of-type {
+          margin-left: 0;
+          margin-right: auto;
+        }
+
+        mat-select {
+          margin-left: 12px;
+        }
+      }
+    }
+  }
+}

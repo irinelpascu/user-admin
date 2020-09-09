@@ -1,0 +1,30 @@
+:host {
+  display: block;
+  padding: 24px;
+
+  mat-card {
+    margin-top: 20px;
+
+    mat-card-content {
+      ef-list-item {
+        &:not(:first-of-type) {
+          margin-top: 8px;
+        }
+      }
+    }
+
+    mat-card-actions {
+      display: flex;
+      align-items: center;
+      height: 60px;
+      margin-left: 0;
+      margin-right: 0;
+      border-top: 1px solid gray;
+      padding: 4px 0 0 0;
+
+      ef-new-item {
+        margin-left: auto;
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+<mat-card class="mat-elevation-z2">
+  <mat-card-header>
+    <mat-card-title>Permission</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ef-list-item *ngFor="let permission of userAdminService.getPermissions()"
+      [model]="permission" [configs]="userAdminService.getOptions('permission')">
+    </ef-list-item>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="addingPermission = true">New Permission</button>
+    <ef-new-item *ngIf="addingPermission"
+      (create)="userAdminService.addPermission($event)"
+      (dismiss)="addingPermission = false">
+    </ef-new-item>
+  </mat-card-actions>
+</mat-card>
+<mat-card class="mat-elevation-z2">
+  <mat-card-header>
+    <mat-card-title>User Group</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ef-list-item *ngFor="let userGroup of userAdminService.getUserGroups()"
+      [model]="userGroup" [configs]="userAdminService.getOptions('userGroup')">
+    </ef-list-item>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="addingUserGroup = true">New User Group</button>
+    <ef-new-item *ngIf="addingUserGroup"
+      (create)="userAdminService.addUserGroup($event)"
+      (dismiss)="addingUserGroup = false">
+    </ef-new-item>
+  </mat-card-actions>
+</mat-card>
+<mat-card class="mat-elevation-z2">
+  <mat-card-header>
+    <mat-card-title>User</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ef-list-item *ngFor="let user of userAdminService.getUsers()"
+      [model]="user" [configs]="userAdminService.getOptions('user')">
+    </ef-list-item>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="addingUser = true">New User</button>
+    <ef-new-item *ngIf="addingUser"
+      (create)="userAdminService.addUser($event)"
+      (dismiss)="addingUser = false">
+    </ef-new-item>
+  </mat-card-actions>
+</mat-card>

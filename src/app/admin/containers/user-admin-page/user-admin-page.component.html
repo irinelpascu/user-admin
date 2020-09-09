@@ -12,7 +12,7 @@
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="addingPermission = true">New Permission</button>
     <ef-new-item *ngIf="addingPermission"
-      (create)="userAdminService.upsertPermission($event)"
+      (create)="userAdminService.upsertPermission($event); addingPermission = false"
       (dismiss)="addingPermission = false">
     </ef-new-item>
   </mat-card-actions>
@@ -31,7 +31,7 @@
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="addingUserGroup = true">New User Group</button>
     <ef-new-item *ngIf="addingUserGroup"
-      (create)="userAdminService.upsertUserGroup($event)"
+      (create)="userAdminService.upsertUserGroup($event); addingUserGroup = false"
       (dismiss)="addingUserGroup = false">
     </ef-new-item>
   </mat-card-actions>
@@ -51,7 +51,7 @@
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="addingUser = true">New User</button>
     <ef-new-item *ngIf="addingUser"
-      (create)="userAdminService.upsertUser($event)"
+      (create)="userAdminService.upsertUser($event); addingUser = false"
       (dismiss)="addingUser = false">
     </ef-new-item>
   </mat-card-actions>

@@ -5,6 +5,7 @@ import {
 } from '@angular/core/testing';
 
 import { NewItemComponent } from './new-item.component';
+import { FormBuilder } from '@angular/forms';
 
 describe('NewItemComponent', () => {
   let component: NewItemComponent;
@@ -12,7 +13,8 @@ describe('NewItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NewItemComponent]
+      declarations: [NewItemComponent],
+      providers: [FormBuilder]
     })
       .compileComponents();
   }));
@@ -25,5 +27,12 @@ describe('NewItemComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit created object', () => {
+    spyOn(component.create, 'emit');
+    component.formGroup.setValue({id: 'p1', name: 'Permission 2'});
+    component.onSave();
+    expect(component.create.emit).toHaveBeenCalledWith({id: 'p1', name: 'Permission 2'});
   });
 });

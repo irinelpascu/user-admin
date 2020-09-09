@@ -69,6 +69,48 @@ export class UserAdminService {
     return this.configOptions[type];
   }
 
+  public getUserPermissions(userId: string): Permission[] {
+    const user: User = this.users.find(value => value.id === userId);
+    if (user) {
+      const userGroups: UserGroup[] = this.userGroups.filter(group => (user.userGroups || []).includes(group.id));
+      let permissionIds: string[] = [...(user.permissions || []), ...userGroups.reduce((acc, crt) => [
+        ...acc,
+        ...crt.permissions,
+      ], [])];
+      permissionIds = Array.from(new Set(permissionIds));
+      return this.permissions.filter(permission => permissionIds.includes(permission.id));
+    }
+    return null;
+  }
+
+  public addMockData() {
+    this.permissions = [
+      {
+        id: 'p1',
+        name: 'Permission 1'
+      },
+      {
+        id: 'p2',
+        name: 'Permission 2'
+      }
+    ];
+    this.userGroups = [
+      {
+        id: 'g1',
+        name: 'Group 1',
+        permissions: ['p1']
+      },
+    ];
+    this.users = [
+      {
+        id: 'g1',
+        name: 'Group 1',
+        permissions: ['p2'],
+        userGroups: ['g1']
+      },
+    ];
+  }
+
   private generateConfigOptions() {
     this.configOptions = {
       permission: [],

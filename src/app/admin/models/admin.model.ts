@@ -7,12 +7,12 @@ export interface Permission extends Configurable {
 }
 
 export interface UserGroup extends Configurable {
-  permissions?: Permission[];
+  permissions?: string[];
 }
 
 export interface User extends Configurable {
-  permissions?: Permission[];
-  groups?: UserGroup[];
+  permissions?: string[];
+  userGroups?: string[];
 }
 
 export interface ConfigOption {

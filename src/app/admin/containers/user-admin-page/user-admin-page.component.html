@@ -43,6 +43,7 @@
   <mat-card-content>
     <ef-list-item *ngFor="let user of userAdminService.getUsers()"
       [model]="user"
+      [permissions]="userAdminService.getUserPermissions(user.id)"
       [configs]="userAdminService.getOptions('user')"
       (update)="userAdminService.updateUser($event)">
     </ef-list-item>

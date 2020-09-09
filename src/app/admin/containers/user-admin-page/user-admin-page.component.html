@@ -4,7 +4,9 @@
   </mat-card-header>
   <mat-card-content>
     <ef-list-item *ngFor="let permission of userAdminService.getPermissions()"
-      [model]="permission" [configs]="userAdminService.getOptions('permission')">
+      [model]="permission"
+      [configs]="userAdminService.getOptions('permission')"
+      (update)="userAdminService.updatePermission($event)">
     </ef-list-item>
   </mat-card-content>
   <mat-card-actions>
@@ -21,7 +23,9 @@
   </mat-card-header>
   <mat-card-content>
     <ef-list-item *ngFor="let userGroup of userAdminService.getUserGroups()"
-      [model]="userGroup" [configs]="userAdminService.getOptions('userGroup')">
+      [model]="userGroup"
+      [configs]="userAdminService.getOptions('userGroup')"
+      (update)="userAdminService.updateUserGroup($event)">
     </ef-list-item>
   </mat-card-content>
   <mat-card-actions>
@@ -38,7 +42,9 @@
   </mat-card-header>
   <mat-card-content>
     <ef-list-item *ngFor="let user of userAdminService.getUsers()"
-      [model]="user" [configs]="userAdminService.getOptions('user')">
+      [model]="user"
+      [configs]="userAdminService.getOptions('user')"
+      (update)="userAdminService.updateUser($event)">
     </ef-list-item>
   </mat-card-content>
   <mat-card-actions>

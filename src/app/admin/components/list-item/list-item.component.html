@@ -7,13 +7,11 @@
         Name is <strong>required</strong>
       </mat-error>
     </mat-form-field>
-    <mat-form-field *ngIf="formGroup.contains('userGroups')">
-      <mat-label>User Groups</mat-label>
-      <input matInput formControlName="userGroups" placeholder="Select the user groups">
-    </mat-form-field>
-    <mat-form-field *ngIf="formGroup.contains('permissions')">
-      <mat-label>Permissions</mat-label>
-      <input matInput formControlName="permissions" placeholder="Select the permissions">
+    <mat-form-field *ngFor="let config of configs">
+      <mat-label>{{LABELS[config.id]}}</mat-label>
+      <mat-select [formControlName]="config.id" [placeholder]="PLACEHOLDERS[config.id]" [multiple]="true">
+        <mat-option *ngFor="let option of config.options" [value]="option.id">{{option.name}}</mat-option>
+      </mat-select>
     </mat-form-field>
   </form>
 </mat-card>

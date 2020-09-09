@@ -28,6 +28,16 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ListItemComponent implements OnChanges, OnDestroy {
 
+  LABELS = {
+    userGroups: 'User groups',
+    permissions: 'Permissions',
+  };
+
+  PLACEHOLDERS = {
+    userGroups: 'Select the user groups',
+    permissions: 'Select the permissions',
+  };
+
   @Input() model: Configurable;
   @Input() configs: ConfigOption[];
   @Output() update: EventEmitter<Configurable> = new EventEmitter<Configurable>();
@@ -44,7 +54,10 @@ export class ListItemComponent implements OnChanges, OnDestroy {
       this.configs.reduce((acc, crt) => ({
         ...acc,
         [crt.id]: this.fb.control(this.model[crt.id]),
-      }), {name: this.fb.control(this.model.name, Validators.required)})
+      }), {
+        id: this.fb.control(this.model.id, Validators.required),
+        name: this.fb.control(this.model.name, Validators.required),
+      })
     );
     this.formGroup.valueChanges
       .pipe(
